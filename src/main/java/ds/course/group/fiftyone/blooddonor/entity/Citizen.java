@@ -108,4 +108,16 @@ public class Citizen {
     public void setBloodType(BloodType bloodType) {
         this.bloodType = bloodType;
     }
+
+    @Override
+    public String toString() {
+        return "Citizen{" +
+                "Id=" + this.citizenId + '\'' +
+                ", firstName='" + this.firstName + '\'' +
+                ", lastName='" + this.lastName + '\'' +
+                ", email='" + this.email + '\'' +
+                ", region" + this.region + '\'' +
+                ", goodHeal" + this.goodHealth + '\'' +
+                "}";
+    }
 }
