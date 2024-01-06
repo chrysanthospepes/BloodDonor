@@ -103,5 +103,11 @@ public class Citizen {
         this.goodHealth = goodHealth;
     }
 
+    public BloodType getBloodType() {
+        return bloodType;
+    }
 
+    public void setBloodType(BloodType bloodType) {
+        this.bloodType = bloodType;
+    }
 }
