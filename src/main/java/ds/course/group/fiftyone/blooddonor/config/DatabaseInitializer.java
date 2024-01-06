@@ -2,7 +2,6 @@ package ds.course.group.fiftyone.blooddonor.config;
 
 
 import ds.course.group.fiftyone.blooddonor.entity.BloodType;
-import ds.course.group.fiftyone.blooddonor.entity.BloodTypes;
 import ds.course.group.fiftyone.blooddonor.entity.Role;
 import ds.course.group.fiftyone.blooddonor.repository.BloodTypeRepository;
 import ds.course.group.fiftyone.blooddonor.repository.RoleRepository;
@@ -23,14 +22,40 @@ public class DatabaseInitializer {
     public void populateDatabase() {
 
         // Populate blood types
-        for (BloodTypes bloodType : BloodTypes.values()) {
-            if (!bloodTypeRepository.findByBloodType(bloodType)) {
-                BloodType bloodTypeEntity = new BloodType(bloodType);
-                bloodTypeRepository.save(bloodTypeEntity);
-            }
-        }
+        bloodTypeRepository.findByBloodType("A+").orElseGet(() -> {
+            bloodTypeRepository.save(new BloodType("A+"));
+            return null;
+        });
+        bloodTypeRepository.findByBloodType("A-").orElseGet(() -> {
+            bloodTypeRepository.save(new BloodType("A-"));
+            return null;
+        });
+        bloodTypeRepository.findByBloodType("B+").orElseGet(() -> {
+            bloodTypeRepository.save(new BloodType("B+"));
+            return null;
+        });
+        bloodTypeRepository.findByBloodType("B-").orElseGet(() -> {
+            bloodTypeRepository.save(new BloodType("B-"));
+            return null;
+        });
+        bloodTypeRepository.findByBloodType("AB+").orElseGet(() -> {
+            bloodTypeRepository.save(new BloodType("AB+"));
+            return null;
+        });
+        bloodTypeRepository.findByBloodType("AB-").orElseGet(() -> {
+            bloodTypeRepository.save(new BloodType("AB-"));
+            return null;
+        });
+        bloodTypeRepository.findByBloodType("O+").orElseGet(() -> {
+            bloodTypeRepository.save(new BloodType("O+"));
+            return null;
+        });
+        bloodTypeRepository.findByBloodType("O-").orElseGet(() -> {
+            bloodTypeRepository.save(new BloodType("O-"));
+            return null;
+        });
 
-        //Add roles
+        // Add roles
         roleRepository.findByName("ROLE_ADMIN").orElseGet(() -> {
             roleRepository.save(new Role("ROLE_ADMIN"));
             return null;
