@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @RepositoryRestResource(path= "bloodtype")
 public interface BloodTypeRepository extends JpaRepository<BloodType, Long> {
-    boolean existByBloodType(String bloodType);
+    boolean existsByBloodType(String bloodType);
     Optional<BloodType> findByBloodType(String bloodType);
 }
