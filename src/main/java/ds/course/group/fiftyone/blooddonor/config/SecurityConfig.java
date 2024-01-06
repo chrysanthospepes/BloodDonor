@@ -40,15 +40,16 @@ public class SecurityConfig {
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers(
+                        //.requestMatchers("/api/auth/**").permitAll()
+                        /*.requestMatchers(
                                 "/v3/api-docs/**",
                                 "/v2/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
-                        ).permitAll()
+                        ).permitAll()*/
                         //.requestMatchers("/students/**").hasRole("USER")
                         //.anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
