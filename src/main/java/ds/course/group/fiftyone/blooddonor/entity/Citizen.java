@@ -3,6 +3,7 @@ package ds.course.group.fiftyone.blooddonor.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -32,7 +33,7 @@ public class Citizen {
     private String region;
 
     @Column
-    @NotBlank
+    @NotNull
     private boolean goodHealth;     // true if the citizen is healthy
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
