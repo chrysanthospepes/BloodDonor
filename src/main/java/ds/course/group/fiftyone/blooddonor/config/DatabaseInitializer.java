@@ -30,13 +30,13 @@ public class DatabaseInitializer {
             }
         }
 
-        //Populate roles
+        //Add roles
         roleRepository.findByName("ROLE_ADMIN").orElseGet(() -> {
             roleRepository.save(new Role("ROLE_ADMIN"));
             return null;
         });
-        roleRepository.findByName("ROLE_MANAGER").orElseGet(() -> {
-            roleRepository.save(new Role("ROLE_MANAGER"));
+        roleRepository.findByName("ROLE_MODERATOR").orElseGet(() -> {
+            roleRepository.save(new Role("ROLE_MODERATOR"));
             return null;
         });
         roleRepository.findByName("ROLE_USER").orElseGet(() -> {
