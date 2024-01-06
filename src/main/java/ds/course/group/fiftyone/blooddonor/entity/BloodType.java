@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
+@Table(name = "bloodtypes")
 public class BloodType {
 
     @Id
@@ -12,13 +13,14 @@ public class BloodType {
 
     @Column
     @NotBlank
-    private String bloodType;
+    @Enumerated(EnumType.STRING)
+    private BloodTypes bloodType;
 
     // Constructors
     public BloodType() {
     }
 
-    public BloodType(String bloodType) {
+    public BloodType(BloodTypes bloodType) {
         this.bloodType = bloodType;
     }
 
@@ -31,11 +33,11 @@ public class BloodType {
         this.bloodTypeId = id;
     }
 
-    public String getBloodType() {
+    public BloodTypes getBloodType() {
         return bloodType;
     }
 
-    public void setBloodType(String bloodType) {
+    public void setBloodType(BloodTypes bloodType) {
         this.bloodType = bloodType;
     }
 }

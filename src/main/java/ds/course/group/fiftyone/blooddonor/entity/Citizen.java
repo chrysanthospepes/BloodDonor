@@ -5,10 +5,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
+@Table(name = "citizens")
 public class Citizen {
 
     @Id
@@ -37,7 +35,7 @@ public class Citizen {
     @NotBlank
     private boolean goodHealth;     // true if the citizen is healthy
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinTable(name = "citizen_bloodtype",
             joinColumns = @JoinColumn(name = "citizen_id"),
             inverseJoinColumns = @JoinColumn(name = "bloodtype_id"))
