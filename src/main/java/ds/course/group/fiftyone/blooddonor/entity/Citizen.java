@@ -36,7 +36,7 @@ public class Citizen {
     @NotNull
     private boolean goodHealth;     // true if the citizen is healthy
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name = "citizen_bloodtype",
             joinColumns = @JoinColumn(name = "citizen_id"),
             inverseJoinColumns = @JoinColumn(name = "bloodtype_id"))

@@ -1,8 +1,12 @@
 package ds.course.group.fiftyone.blooddonor.api;
 
+import ds.course.group.fiftyone.blooddonor.dto.CitizenDTO;
 import ds.course.group.fiftyone.blooddonor.entity.Citizen;
 import ds.course.group.fiftyone.blooddonor.service.CitizenService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +41,25 @@ public class CitizenRestController {
     @DeleteMapping("/{id}")
     public void deleteCitizen(@PathVariable("id") Long id) {
         citizenService.deleteCitizen(id);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Citizen> createCitizen(@RequestBody CitizenDTO citizenDTO) {
+        try {
+            Citizen newCitizen = new Citizen(citizenDTO.getFirstName(),
+                    citizenDTO.getLastName(),
+                    citizenDTO.getEmail(),
+                    citizenDTO.getRegion(),
+                    citizenDTO.isGoodHealth());
+
+            Citizen createdCitizen = citizenService.createCitizenWithExistingBloodType(newCitizen, citizenDTO.getBloodTypeString());
+
+            return new ResponseEntity<>(createdCitizen, HttpStatus.CREATED);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
