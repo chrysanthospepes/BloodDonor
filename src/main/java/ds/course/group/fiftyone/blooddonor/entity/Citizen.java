@@ -39,7 +39,7 @@ public class Citizen {
     @JoinTable(name = "citizen_bloodtype",
             joinColumns = @JoinColumn(name = "citizen_id"),
             inverseJoinColumns = @JoinColumn(name = "bloodtype_id"))
-    private BloodType bloodType;    // the blood type of the citizen
+    private BloodType bloodType;
 
 
     public Citizen() {

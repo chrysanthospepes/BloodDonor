@@ -28,4 +28,10 @@ public class CitizenRestController {
     public Citizen getCitizen(@PathVariable("id") Long id) {
         return citizenRepository.findById(id).get();
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteCitizen(@PathVariable("id") Long id) {
+        citizenRepository.deleteById(id);
+    }
+
 }
