@@ -12,15 +12,13 @@ public class BloodType {
     private Long bloodTypeId;
 
     @Column
-    @NotBlank
-    @Enumerated(EnumType.STRING)
-    private BloodTypes bloodType;
+    private String bloodType;
 
     // Constructors
     public BloodType() {
     }
 
-    public BloodType(BloodTypes bloodType) {
+    public BloodType(String bloodType) {
         this.bloodType = bloodType;
     }
 
@@ -33,11 +31,11 @@ public class BloodType {
         this.bloodTypeId = id;
     }
 
-    public BloodTypes getBloodType() {
+    public String getBloodType() {
         return bloodType;
     }
 
-    public void setBloodType(BloodTypes bloodType) {
+    public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
     }
 }
