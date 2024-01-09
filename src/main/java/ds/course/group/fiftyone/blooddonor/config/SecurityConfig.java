@@ -40,16 +40,18 @@ public class SecurityConfig {
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests(auth -> auth
-                        //.requestMatchers("/api/auth/**").permitAll()
-                        /*.requestMatchers(
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/v2/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
-                        ).permitAll()*/
-                        //.requestMatchers("/students/**").hasRole("USER")
-                        //.anyRequest().authenticated()
-                        .anyRequest().permitAll()
+                        ).permitAll()
+                        //.requestMatchers("/citizen/**").hasRole("USER")
+                        .requestMatchers("/api/citizen/**").authenticated()
+                        //.requestMatchers("/api/citizen").hasRole("USER")
+                        .anyRequest().authenticated()
+                        //.anyRequest().permitAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
