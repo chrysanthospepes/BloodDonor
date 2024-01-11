@@ -42,6 +42,12 @@ public class Citizen {
             inverseJoinColumns = @JoinColumn(name = "bloodtype_id"))
     private BloodType bloodType;
 
+    @Column
+    private boolean isDonor = false;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     public Citizen() {
     }
@@ -110,6 +116,14 @@ public class Citizen {
         this.bloodType = bloodType;
     }
 
+    public boolean isDonor() {
+        return isDonor;
+    }
+
+    public void setDonor(boolean donor) {
+        isDonor = donor;
+    }
+
     @Override
     public String toString() {
         return "Citizen{" +
@@ -119,6 +133,8 @@ public class Citizen {
                 ", email='" + this.email + '\'' +
                 ", region" + this.region + '\'' +
                 ", goodHeal" + this.goodHealth + '\'' +
+                ", bloodType" + this.bloodType + '\'' +
+                ", isDonor" + this.isDonor + '\'' +
                 "}";
     }
 }
