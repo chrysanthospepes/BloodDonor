@@ -41,6 +41,9 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Citizen citizen;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private DonorApplication donorApplication;
+
     public User() {
     }
 
@@ -88,6 +91,22 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Citizen getCitizen() {
+        return citizen;
+    }
+
+    public void setCitizen(Citizen citizen) {
+        this.citizen = citizen;
+    }
+
+    public DonorApplication getDonorApplication() {
+        return donorApplication;
+    }
+
+    public void setDonorApplication(DonorApplication donorApplication) {
+        this.donorApplication = donorApplication;
     }
 
     @Override
