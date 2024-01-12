@@ -1,7 +1,9 @@
 package ds.course.group.fiftyone.blooddonor.api;
 
+import ds.course.group.fiftyone.blooddonor.dto.DonorApplicationDTO;
 import ds.course.group.fiftyone.blooddonor.entity.DonorApplication;
 import ds.course.group.fiftyone.blooddonor.service.DonorApplicationService;
+import ds.course.group.fiftyone.blooddonor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +18,20 @@ public class DonorApplicationController {
     @Autowired
     private DonorApplicationService donorApplicationService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/submit")
     public ResponseEntity<DonorApplication> submitApplication(@RequestBody DonorApplication application) {
         DonorApplication submittedApplication = donorApplicationService.submitApplication(application);
         return new ResponseEntity<>(submittedApplication, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<DonorApplication> createApplication(@RequestBody DonorApplicationDTO applicationDTO) {
+        Long userId = userService.getCurrentUserId();
+        DonorApplication createdApplication = donorApplicationService.createApplication(applicationDTO, userId);
+        return new ResponseEntity<>(createdApplication, HttpStatus.CREATED);
     }
 
     @PostMapping("/review/{applicationId}")
@@ -34,3 +46,4 @@ public class DonorApplicationController {
         return ResponseEntity.ok(unreviewedApplications);
     }
 }
+
