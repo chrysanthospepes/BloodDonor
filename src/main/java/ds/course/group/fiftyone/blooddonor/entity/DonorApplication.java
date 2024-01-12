@@ -41,7 +41,7 @@ public class DonorApplication {
     private String bloodType;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", unique = true)
     private User user;
 
     @Column
