@@ -35,3 +35,4 @@ public class NotificationController {
         notificationService.sendNotifications("We need your help! Please donate blood!");
     }
 }
+
