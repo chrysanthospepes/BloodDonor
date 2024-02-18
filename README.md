@@ -3,7 +3,7 @@
 This is the assignment for the Distributed Systems course at the University of Harokopio, Dept. of Informatics and Telematics.
 
 ## Group #51
-Chrysanthos Pepes, 219876\
+Chrysanthos Pepes, 21976\
 Konstantinos Gerokostas, 219137
 
 ## Database
@@ -18,4 +18,9 @@ docker run --name ds-blooddonor-51 --rm \
 -d --net=host \
 -v ds-blooddonor-51-vol:/var/lib/postgresql/data \
 postgres:14
+```
+
+## Start spring
+```bash
+mvn spring-boot:run
 ```
