@@ -6,6 +6,7 @@ import ds.course.group.fiftyone.blooddonor.service.CitizenService;
 import ds.course.group.fiftyone.blooddonor.service.NotificationService;
 import ds.course.group.fiftyone.blooddonor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,14 +24,16 @@ public class NotificationController {
     @Autowired
     private UserService userService;
 
-    // new method to get all notifications for a user
-    @GetMapping("/{userId}")
+    // Method to get all notifications for a user
+    @Secured({"ROLE_USER"})
+    @GetMapping("/get/{userId}")
     public List<Notification> getNotifications(@PathVariable("userId") Long userId) {
         return notificationService.getNotifications(userId);
     }
 
-    // new method that creates a new notification for each user with a specific blood type
-    @PostMapping("")
+    // Method that creates a new notification for each user with a specific blood type
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
+    @PostMapping("send-notification")
     public void sendNotification() {
         notificationService.sendNotifications("We need your help! Please donate blood!");
     }

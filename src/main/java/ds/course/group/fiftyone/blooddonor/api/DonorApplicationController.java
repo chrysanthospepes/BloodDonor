@@ -7,6 +7,7 @@ import ds.course.group.fiftyone.blooddonor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,14 +22,8 @@ public class DonorApplicationController {
     @Autowired
     private UserService userService;
 
-    // old method
-    @PostMapping("/submit")
-    public ResponseEntity<DonorApplication> submitApplication(@RequestBody DonorApplication application) {
-        DonorApplication submittedApplication = donorApplicationService.submitApplication(application);
-        return new ResponseEntity<>(submittedApplication, HttpStatus.CREATED);
-    }
-
-    // we use this method to create a new application
+    // Create application linked to user
+    @Secured({"ROLE_USER"})
     @PostMapping("/create")
     public ResponseEntity<DonorApplication> createApplication(@RequestBody DonorApplicationDTO applicationDTO) {
         Long userId = userService.getCurrentUserId();
@@ -36,12 +31,16 @@ public class DonorApplicationController {
         return new ResponseEntity<>(createdApplication, HttpStatus.CREATED);
     }
 
+    // Review application by applicationId (for admin/moderator)
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     @PostMapping("/review/{applicationId}")
     public ResponseEntity<DonorApplication> reviewApplication(@PathVariable Long applicationId, @RequestParam boolean isAccepted) {
         DonorApplication reviewedApplication = donorApplicationService.reviewApplication(applicationId, isAccepted);
         return ResponseEntity.ok(reviewedApplication);
     }
 
+    // Get all applications (for admin/moderator)
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     @GetMapping("/unreviewed")
     public ResponseEntity<List<Long>> getPendingApplications() {
         List<Long> unreviewedApplications = donorApplicationService.getPendingApplications();
@@ -49,6 +48,7 @@ public class DonorApplicationController {
     }
 
     // View application by applicationId (for admin/moderator)
+    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     @GetMapping("/view/{applicationId}")
     public ResponseEntity<DonorApplication> viewApplication(@PathVariable Long applicationId) {
         DonorApplication application = donorApplicationService.viewApplication(applicationId);

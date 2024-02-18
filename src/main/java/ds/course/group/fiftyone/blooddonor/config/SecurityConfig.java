@@ -60,12 +60,19 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
                         ).permitAll()
-                        //.requestMatchers("/citizen/**").hasRole("USER")
-                        .requestMatchers("/api/citizen/**").authenticated()
-                        .requestMatchers("/api/donor-application/**").authenticated()
-                        //.requestMatchers("/api/citizen").hasRole("USER")
+                        // Citizen api
+                        .requestMatchers("/api/citizen/user/**").hasRole("USER")
+                        .requestMatchers("/api/citizen/change-email").hasRole("USER")
+                        .requestMatchers("/api/citizen/**").hasAnyRole("ADMIN", "MODERATOR")
+                        // Donor application api
+                        .requestMatchers("/api/donor-application/create").hasRole("USER")
+                        .requestMatchers("/api/donor-application/review/**").hasAnyRole("ADMIN", "MODERATOR")
+                        .requestMatchers("/api/donor-application/unreviewed/**").hasAnyRole("ADMIN", "MODERATOR")
+                        .requestMatchers("/api/donor-application/view/**").hasAnyRole("ADMIN", "MODERATOR")
+                        // Notification api
+                        .requestMatchers("/api/notification/get/**").hasRole("USER")
+                        .requestMatchers("/api/notification/**").hasAnyRole("ADMIN", "MODERATOR")
                         .anyRequest().authenticated()
-                        //.anyRequest().permitAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
