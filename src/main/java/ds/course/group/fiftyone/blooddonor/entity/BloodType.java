@@ -38,4 +38,11 @@ public class BloodType {
     public void setBloodType(String bloodType) {
         this.bloodType = bloodType;
     }
+
+    @Override
+    public String toString() {
+        return "BloodType{" +
+                "bloodType='" + bloodType + '\'' +
+                '}';
+    }
 }

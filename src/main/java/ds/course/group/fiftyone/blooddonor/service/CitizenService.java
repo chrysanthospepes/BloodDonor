@@ -1,5 +1,6 @@
 package ds.course.group.fiftyone.blooddonor.service;
 
+import ds.course.group.fiftyone.blooddonor.dto.CitizenResponseDto;
 import ds.course.group.fiftyone.blooddonor.entity.BloodType;
 import ds.course.group.fiftyone.blooddonor.entity.Citizen;
 import ds.course.group.fiftyone.blooddonor.repository.BloodTypeRepository;
@@ -48,7 +49,40 @@ public class CitizenService {
     }
 
     @Transactional
+    public CitizenResponseDto getCitizenByUserId(Long userId) {
+        Citizen citizen = citizenRepository.findByUser_Id(userId);
+        if (citizen == null) {
+            throw new EntityNotFoundException("Citizen not found");
+        }
+
+        CitizenResponseDto citizenResponseDto = new CitizenResponseDto();
+        citizenResponseDto.setCitizenId(citizen.getCitizenId());
+        citizenResponseDto.setFirstName(citizen.getFirstName());
+        citizenResponseDto.setLastName(citizen.getLastName());
+        citizenResponseDto.setEmail(citizen.getEmail());
+        citizenResponseDto.setRegion(citizen.getRegion());
+        citizenResponseDto.setGoodHealth(citizen.isGoodHealth());
+        citizenResponseDto.setBloodTypeString(citizen.getBloodType().getBloodType());
+        citizenResponseDto.setDonor(citizen.isDonor());
+
+        return citizenResponseDto;
+    }
+
+    @Transactional
     public void deleteCitizen(Long citizenId){
         citizenRepository.deleteById(citizenId);
     }
+
+    @Transactional
+    public void changeEmail(Long userId, String email){
+        Citizen citizen = citizenRepository.findByUser_Id(userId);
+        citizen.setEmail(email);
+        //citizenRepository.delete(citizen);
+        citizenRepository.save(citizen);
+    }
+
+    public List<Citizen> getDonors() {
+        return citizenRepository.findAllByIsDonorTrue();
+    }
+
 }

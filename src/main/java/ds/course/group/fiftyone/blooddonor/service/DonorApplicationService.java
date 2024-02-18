@@ -35,6 +35,7 @@ public class DonorApplicationService {
         return donorApplicationRepository.save(donorApplication);
     }
 
+    // new method that binds the application to the user
     public DonorApplication createApplication(DonorApplicationDTO applicationDTO, Long userId) {
         // Retrieve the user based on userId
         User user = userRepository.findById(userId).orElseThrow(
@@ -71,25 +72,25 @@ public class DonorApplicationService {
         application.setAccepted(isAccepted);
         donorApplicationRepository.save(application);
 
-        if (isAccepted) {
-            createCitizenFromApplication(application);
-        }
+        createCitizenFromApplication(application, isAccepted);
 
         return application;
     }
 
-    private void createCitizenFromApplication(DonorApplication application) {
+    private void createCitizenFromApplication(DonorApplication application, boolean isAccepted) {
         Citizen citizen = new Citizen();
         citizen.setFirstName(application.getFirstName());
         citizen.setLastName(application.getLastName());
         citizen.setEmail(application.getEmail());
         citizen.setRegion(application.getRegion());
         citizen.setGoodHealth(application.isGoodHealth());
+        citizen.setDonor(isAccepted);
 
         BloodType bloodType = bloodTypeRepository.findByBloodType(application.getBloodType())
                 .orElseThrow(() -> new EntityNotFoundException("BloodType not found"));
         citizen.setBloodType(bloodType);
 
+        citizen.setUser(application.getUser());
 
         citizenRepository.save(citizen);
     }
@@ -100,6 +101,11 @@ public class DonorApplicationService {
                 .stream()
                 .map(DonorApplication::getApplicationId)
                 .collect(Collectors.toList());
+    }
+
+    public DonorApplication viewApplication(Long applicationId) {
+        return donorApplicationRepository.findById(applicationId)
+                .orElseThrow(() -> new EntityNotFoundException("Application not found"));
     }
 
 }

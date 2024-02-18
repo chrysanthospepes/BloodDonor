@@ -1,22 +1,26 @@
 package ds.course.group.fiftyone.blooddonor.dto;
 
-public class CitizenDTO {
-
+public class CitizenResponseDto {
+    private Long citizenId;
     private String firstName;
     private String lastName;
     private String email;
     private String region;
     private boolean goodHealth;
     private String bloodTypeString;
+    private boolean isDonor;
 
-    // Constructors, Getters, and Setters
-
-    public CitizenDTO() {
+    public CitizenResponseDto() {
     }
 
-    // Add additional constructors if needed
+    public Long getCitizenId() {
+        return citizenId;
+    }
 
-    // Getters and setters for each field
+    public void setCitizenId(Long citizenId) {
+        this.citizenId = citizenId;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -63,5 +67,13 @@ public class CitizenDTO {
 
     public void setBloodTypeString(String bloodTypeString) {
         this.bloodTypeString = bloodTypeString;
+    }
+
+    public boolean isDonor() {
+        return isDonor;
+    }
+
+    public void setDonor(boolean donor) {
+        isDonor = donor;
     }
 }

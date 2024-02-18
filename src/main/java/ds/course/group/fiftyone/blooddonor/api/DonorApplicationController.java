@@ -21,12 +21,14 @@ public class DonorApplicationController {
     @Autowired
     private UserService userService;
 
+    // old method
     @PostMapping("/submit")
     public ResponseEntity<DonorApplication> submitApplication(@RequestBody DonorApplication application) {
         DonorApplication submittedApplication = donorApplicationService.submitApplication(application);
         return new ResponseEntity<>(submittedApplication, HttpStatus.CREATED);
     }
 
+    // we use this method to create a new application
     @PostMapping("/create")
     public ResponseEntity<DonorApplication> createApplication(@RequestBody DonorApplicationDTO applicationDTO) {
         Long userId = userService.getCurrentUserId();
@@ -45,5 +47,13 @@ public class DonorApplicationController {
         List<Long> unreviewedApplications = donorApplicationService.getPendingApplications();
         return ResponseEntity.ok(unreviewedApplications);
     }
+
+    // View application by applicationId (for admin/moderator)
+    @GetMapping("/view/{applicationId}")
+    public ResponseEntity<DonorApplication> viewApplication(@PathVariable Long applicationId) {
+        DonorApplication application = donorApplicationService.viewApplication(applicationId);
+        return ResponseEntity.ok(application);
+    }
+
 }
 

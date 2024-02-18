@@ -1,5 +1,6 @@
 package ds.course.group.fiftyone.blooddonor.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -45,8 +46,9 @@ public class Citizen {
     @Column
     private boolean isDonor = false;
 
+    @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", unique = true)
     private User user;
 
     public Citizen() {
@@ -124,6 +126,14 @@ public class Citizen {
         isDonor = donor;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Citizen{" +
@@ -132,9 +142,13 @@ public class Citizen {
                 ", lastName='" + this.lastName + '\'' +
                 ", email='" + this.email + '\'' +
                 ", region" + this.region + '\'' +
-                ", goodHeal" + this.goodHealth + '\'' +
+                ", goodHealth" + this.goodHealth + '\'' +
                 ", bloodType" + this.bloodType + '\'' +
                 ", isDonor" + this.isDonor + '\'' +
                 "}";
+    }
+
+    public Long getUserId() {
+        return this.user.getId();
     }
 }

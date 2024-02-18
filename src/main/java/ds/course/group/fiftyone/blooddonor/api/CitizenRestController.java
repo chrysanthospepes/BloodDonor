@@ -1,8 +1,11 @@
 package ds.course.group.fiftyone.blooddonor.api;
 
 import ds.course.group.fiftyone.blooddonor.dto.CitizenDTO;
+import ds.course.group.fiftyone.blooddonor.dto.CitizenResponseDto;
+import ds.course.group.fiftyone.blooddonor.dto.EmailChangeDTO;
 import ds.course.group.fiftyone.blooddonor.entity.Citizen;
 import ds.course.group.fiftyone.blooddonor.service.CitizenService;
+import ds.course.group.fiftyone.blooddonor.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,9 @@ public class CitizenRestController {
     @Autowired
     private CitizenService citizenService;
 
+    @Autowired
+    private UserService userService;
+
 //    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     @GetMapping("")
     public List<Citizen> showCitizens() {
@@ -31,10 +37,17 @@ public class CitizenRestController {
         return citizenService.saveCitizen(citizen);
     }
 
+    // old method
 //    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     @GetMapping("/{id}")
     public Citizen getCitizen(@PathVariable("id") Long id) {
         return citizenService.getCitizen(id);
+    }
+
+    @GetMapping("/user/{userId}")
+    public CitizenResponseDto getCitizenByUserId(@PathVariable("userId") Long userId) {
+        Long testUserId = userService.getCurrentUserId();
+        return citizenService.getCitizenByUserId(testUserId);
     }
 
 //    @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
@@ -43,6 +56,7 @@ public class CitizenRestController {
         citizenService.deleteCitizen(id);
     }
 
+    // new method to create a new citizen
     @PostMapping("/create")
     public ResponseEntity<Citizen> createCitizen(@RequestBody CitizenDTO citizenDTO) {
         try {
@@ -60,6 +74,14 @@ public class CitizenRestController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    @PostMapping("/change-email")
+    public ResponseEntity<Citizen> changeEmail(@RequestBody EmailChangeDTO email) {
+        Long userId = userService.getCurrentUserId();
+        citizenService.changeEmail(userId, email.getEmail());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
