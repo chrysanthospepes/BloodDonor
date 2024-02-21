@@ -34,8 +34,10 @@ public class NotificationController {
     // Method that creates a new notification for each user with a specific blood type
     @Secured({"ROLE_ADMIN", "ROLE_MODERATOR"})
     @PostMapping("send-notification")
-    public void sendNotification() {
-        notificationService.sendNotifications("We need your help! Please donate blood!");
+    public void sendNotification(@RequestBody String message) {
+        if (message.isEmpty())
+            message = "We need your help! Please donate blood!";
+        notificationService.sendNotifications(message);
     }
 }
 
