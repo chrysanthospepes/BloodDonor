@@ -1,5 +1,6 @@
 package ds.course.group.fiftyone.blooddonor.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -40,6 +41,7 @@ public class DonorApplication {
     @NotBlank
     private String bloodType;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", unique = true)
     private User user;
